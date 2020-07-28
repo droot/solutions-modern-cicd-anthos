@@ -17,26 +17,26 @@
 # Fail on any error.
 set -e
 
-# sa_creds=74668_ci-service-account
-# project_id=anthos-platform-ci-env
+sa_creds=74668_ci-service-account
+project_id=anthos-platform-ci-env
 
-# # Set the project ID for CI
-# gcloud config set project ${project_id}
+# Set the project ID for CI
+gcloud config set project ${project_id}
 
-# if [ -n ${GITHUB_ACTIONS} ]; then
-#   # Running in GitHub Actions
-#   KEY_FILE=/tmp/service-account.json
-#   echo "${GCP_SERVICE_ACCOUNT_JSON}" > ${KEY_FILE}
-# else
-#   # Running in Kokoro
-#   KEY_FILE="${KOKORO_KEYSTORE_DIR}/${sa_creds}"
-# fi
+if [ -n ${GITHUB_ACTIONS} ]; then
+  # Running in GitHub Actions
+  KEY_FILE=/tmp/service-account.json
+  echo "${GCP_SERVICE_ACCOUNT_JSON}" > ${KEY_FILE}
+else
+  # Running in Kokoro
+  KEY_FILE="${KOKORO_KEYSTORE_DIR}/${sa_creds}"
+fi
 
-# # Activate the service account
-# gcloud auth activate-service-account --key-file=${KEY_FILE}
+# Activate the service account
+gcloud auth activate-service-account --key-file=${KEY_FILE}
 
-# # Display commands, now that creds are set.
-# set -x
+# Display commands, now that creds are set.
+set -x
 
 # Retrieve current email
 INT_SA_EMAIL=$(gcloud auth list --filter=status:ACTIVE --format="value(account)")
