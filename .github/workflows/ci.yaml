@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - chore/cicd-temp-project
 jobs:
   run-installer:
     # Job name is Greeting
