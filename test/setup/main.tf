@@ -60,4 +60,8 @@ module "project" {
     "pubsub.googleapis.com",
     "accesscontextmanager.googleapis.com",
   ]
+
+  labels = {
+    cft-ci-module = "anthos-platform"
+  }
 }

@@ -46,7 +46,7 @@ gcloud builds submit --config=test/setup/cloudbuild.yaml \
   --substitutions _ORG_ID=${_ORG_ID},_FOLDER_ID=${_FOLDER_ID},_BILLING_ACCOUNT=${_BILLING_ACCOUNT},_INT_SA_EMAIL=${INT_SA_EMAIL}
 
 # Retrieve the newly created project
-TEMP_PROJECT_ID=$(gcloud projects list --filter="parent.id=${_FOLDER_ID}" --format=json --sort-by=~createTime | jq -r "first(.[]).projectId")
+TEMP_PROJECT_ID=$(gcloud projects list --filter="labels.cft-ci-module=anthos-platform" --format=json --sort-by=~createTime | jq -r "first(.[]).projectId")
 
 echo "Running tests inside project: $TEMP_PROJECT_ID"
 
