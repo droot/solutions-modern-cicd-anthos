@@ -22,34 +22,34 @@ substitutions:
 options:
   substitution_option: 'ALLOW_LOOSE'
 steps:
-# - name: 'gcr.io/cloud-builders/gsutil'
-#   id: 'create-tf-state-bucket'
-#   entrypoint: 'bash'
-#   args:
-#   - '-xe'
-#   - '-c'
-#   - |
-#     gsutil mb gs://${_PROJECT_ID}-anthos-platform-tf-state || true
+- name: 'gcr.io/cloud-builders/gsutil'
+  id: 'create-tf-state-bucket'
+  entrypoint: 'bash'
+  args:
+  - '-xe'
+  - '-c'
+  - |
+    gsutil mb gs://${_PROJECT_ID}-anthos-platform-tf-state || true
 
-# - name: 'gcr.io/cloud-builders/gsutil'
-#   id: 'starter-repo-reference'
-#   entrypoint: 'bash'
-#   args:
-#   - '-xe'
-#   - '-c'
-#   - |
-#     gsutil mb gs://${_PROJECT_ID}-starter-repos || true
-#     gsutil -m cp -r starter-repos gs://${_PROJECT_ID}-starter-repos
+- name: 'gcr.io/cloud-builders/gsutil'
+  id: 'starter-repo-reference'
+  entrypoint: 'bash'
+  args:
+  - '-xe'
+  - '-c'
+  - |
+    gsutil mb gs://${_PROJECT_ID}-starter-repos || true
+    gsutil -m cp -r starter-repos gs://${_PROJECT_ID}-starter-repos
 
-# # Create build-installation-image
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "build-install-image"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       [[ "${_BUILD_IMAGES}" == "false" ]] && exit 0
-#       gcloud builds submit --config=build-image/cloudbuild.yaml
+# Create build-installation-image
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "build-install-image"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      [[ "${_BUILD_IMAGES}" == "false" ]] && exit 0
+      gcloud builds submit --config=build-image/cloudbuild.yaml
 
 # Foundation
 - name: "gcr.io/cloud-builders/gcloud"
