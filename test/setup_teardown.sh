@@ -45,6 +45,8 @@ INT_SA_EMAIL=$(gcloud auth list --filter=status:ACTIVE --format="value(account)"
 gcloud builds submit --config=test/setup/cloudbuild.yaml \
   --substitutions _ORG_ID=${_ORG_ID},_FOLDER_ID=${_FOLDER_ID},_BILLING_ACCOUNT=${_BILLING_ACCOUNT},_INT_SA_EMAIL=${INT_SA_EMAIL}
 
+gcloud projects list --filter="labels.cft-ci-module=anthos-platform" --format=json --sort-by=~createTime
+
 # Retrieve the newly created project
 TEMP_PROJECT_ID=$(gcloud projects list --filter="labels.cft-ci-module=anthos-platform" --format=json --sort-by=~createTime | jq -r "first(.[]).projectId")
 
