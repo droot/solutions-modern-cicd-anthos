@@ -59,7 +59,7 @@ steps:
   args:
     - -c
     - |
-      gcloud builds submit --config=cloudbuild-destroy.yaml
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID}
 
 # 4 Apps
 - name: "gcr.io/cloud-builders/gcloud"
@@ -69,7 +69,7 @@ steps:
   args:
     - -c
     - |
-      gcloud builds submit --config=cloudbuild-destroy.yaml
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID}
   waitFor: ["trigger-destroy-output"]
 
 # 3 ACM
@@ -80,7 +80,7 @@ steps:
   args:
     - -c
     - |
-      gcloud builds submit --config=cloudbuild-destroy.yaml
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID}
   waitFor: ["trigger-destroy-demo-apps"]
 
 # 2 CICD
@@ -91,7 +91,7 @@ steps:
   args:
     - -c
     - |
-      gcloud builds submit --config=cloudbuild-destroy.yaml
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID}
   waitFor: ["trigger-destroy-acm"]
 
 # 1 Clusters
@@ -102,7 +102,7 @@ steps:
   args:
     - -c
     - |
-      gcloud builds submit --config=cloudbuild-destroy.yaml
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID}
   waitFor: ["trigger-destroy-gitlab"]
 
 # 0 Foundation (last)
@@ -114,7 +114,7 @@ steps:
     - -c
     - |
       # Allow the foundation destroy to fail
-      gcloud builds submit --config=cloudbuild-destroy.yaml || true
+      gcloud builds submit --config=cloudbuild-destroy.yaml --substitutions _PROJECT_ID=${_PROJECT_ID} || true
   waitFor: ["trigger-destroy-clusters"]
 
 

@@ -60,65 +60,65 @@ steps:
     - -c
     - |
       gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
-  # waitFor:
-  #   - build-install-image
+  waitFor:
+    - build-install-image
 
-# # Clusters
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "trigger-clusters"
-#   dir: "1_clusters"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       gcloud builds submit
-#   waitFor:
-#     - trigger-foundation
+# Clusters
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "trigger-clusters"
+  dir: "1_clusters"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
+  waitFor:
+    - trigger-foundation
 
-# # CICD
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "trigger-gitlab"
-#   dir: "2_gitlab"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       gcloud builds submit
-#   waitFor:
-#     - trigger-clusters
+# CICD
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "trigger-gitlab"
+  dir: "2_gitlab"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
+  waitFor:
+    - trigger-clusters
 
-# # ACM
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "trigger-acm-install"
-#   dir: "3_acm"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       gcloud builds submit
-#   waitFor:
-#     - trigger-gitlab
+# ACM
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "trigger-acm-install"
+  dir: "3_acm"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
+  waitFor:
+    - trigger-gitlab
 
-# # Apps
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "trigger-app-install"
-#   dir: "4_demo"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       [[ "${_INSTALL_APPS}" == "false" ]] && exit 0
-#       gcloud builds submit
-#   waitFor:
-#     - trigger-acm-install
+# Apps
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "trigger-app-install"
+  dir: "4_demo"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      [[ "${_INSTALL_APPS}" == "false" ]] && exit 0
+      gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
+  waitFor:
+    - trigger-acm-install
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   id: "output-connect-details"
-#   dir: "5_output"
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       gcloud builds submit
-#   waitFor:
-#     - trigger-app-install
+- name: "gcr.io/cloud-builders/gcloud"
+  id: "output-connect-details"
+  dir: "5_output"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      gcloud builds submit --substitutions _PROJECT_ID=${_PROJECT_ID}
+  waitFor:
+    - trigger-app-install

@@ -56,11 +56,11 @@ echo "Running tests inside project: $TEMP_PROJECT_ID"
 # Deploy the platform
 gcloud builds submit --config=cloudbuild.yaml --substitutions _PROJECT_ID=${TEMP_PROJECT_ID}
 
-# # If the setup succeeded then tear it down.
-# if [ $? -eq 0 ]; then
-# 	sleep 5m
-# 	# Clean up after the run
-# 	gcloud builds submit --config=cloudbuild-destroy.yaml
-# fi
+# If the setup succeeded then tear it down.
+if [ $? -eq 0 ]; then
+	sleep 5m
+	# Clean up after the run
+	gcloud builds submit --config=cloudbuild-destroy.yaml
+fi
 
 echo "All passed"
