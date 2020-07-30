@@ -18,6 +18,7 @@ locals {
   int_required_project_roles = [
     "roles/owner",
     "roles/serviceusage.serviceUsageAdmin",
+    # this should work...
     "roles/containeranalysis.admin"
   ]
 }
