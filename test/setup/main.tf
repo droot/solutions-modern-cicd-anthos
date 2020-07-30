@@ -49,6 +49,7 @@ module "project" {
   activate_apis = [
     "admin.googleapis.com",
     "appengine.googleapis.com",
+    "containerregistry.googleapis.com",
     "cloudbilling.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
